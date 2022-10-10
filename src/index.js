@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 
 const client = new ApolloClient({
@@ -12,32 +12,8 @@ const client = new ApolloClient({
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-client
-  .query({
-    query: gql`
-    query Query {
-      allFilms {
-        films {
-          title
-          director
-          releaseDate
-          speciesConnection {
-            species {
-              name
-              classification
-              homeworld {
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-    `,
-  })
-  .then((result) => console.log(result));
   
-
+  
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
