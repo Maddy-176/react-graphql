@@ -1,64 +1,61 @@
-import React from 'react'
-import { useQuery, gql } from '@apollo/client';
-import {GET_ALL_FILMS} from "../queries/index"
-// const GET_ALL_FILMS = gql`
-//   query GET_ALL_FILMS  {
-//     allFilms {
-//       films {
-//         title
-//         director
-//         releaseDate
-//         speciesConnection {
-//           species {
-//             name
-//             classification
-//             homeworld {
-//               name
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// `;
+import React from "react";
+import { useQuery, gql } from "@apollo/client";
+import { GET_ALL_FILMS } from "../queries/index";
+import { useNavigate } from "react-router";
 
-const Movies=()=> {
-    const { loading, error, data } = useQuery(gql`${GET_ALL_FILMS}`);
+import "../styles/movies.css";
+import Button from "../reusableComponents/Button";
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error :(</p>;
+const Movies = () => {
+  const { loading, error, data } = useQuery(
+    gql`
+      ${GET_ALL_FILMS}
+    `
+  );
+
+  let navigate = useNavigate();
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :</p>;
   return (
     <>
-    <h2>Movies</h2>
+      <h2>Movies</h2>
 
-    <table className="table table-striped table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">Movie Title</th>
-      <th scope="col">Director</th>
-      <th scope="col">Release Date</th>
-      {/* <th scope="col">Species Connection</th> */}
-    </tr>
-  </thead>
-  <tbody>
-  {data.allFilms.films.map((film,index)=>(
-  <tr  key={index}>
-    <td>{film.title}</td>
-    <td>{film.director}</td>
-    <td>{film.releaseDate}</td>
-    
-    </tr>
-       
-    ))}
-    
-  </tbody>
-</table>
-   
+      <div className="navigate-btn-container">
+        <Button
+          className={"navigate-back-btn"}
+          btnTxt={"Back"}
+          onClick={() => navigate("/")}
+        />
+      </div>
 
-        {console.log("fetching data",data.allFilms.films)}
-
+      <table
+        className="table table-striped table-bordered"
+        style={{ width: "80%", margin: "auto" }}
+      >
+        <thead>
+          <tr>
+            <th scope="col">Movie Title</th>
+            <th scope="col">Director</th>
+            <th scope="col">Release Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.allFilms.films.map((film, index) => (
+            <tr
+              key={index}
+              onClick={() => navigate(`/movies/${film.id}`)}
+              className="movie-row"
+            >
+              <td>{film.title}</td>
+              <td>{film.director}</td>
+              <td>{film.releaseDate}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </>
-  )
-}
+  );
+};
 
-export default Movies
+export default Movies;
