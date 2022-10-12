@@ -1,0 +1,20 @@
+.movie-row:hover {
+  cursor: pointer;
+}
+
+.movie-dtls-col {
+  border: 1px solid grey;
+  text-align: justify;
+}
+
+.movie-container {
+  width: 80%;
+  margin: auto;
+  margin-top: 10%;
+}
+
+.navigate-btn-container {
+  display: flex;
+  margin-left: 10%;
+  margin-bottom: 2%;
+}
